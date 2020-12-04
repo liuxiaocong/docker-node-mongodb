@@ -1,0 +1,27 @@
+services:
+  mongodb:
+    container_name: nm_composee_mongodb_container
+    image: mongo
+    volumes:
+      - $PWD/mongoData:/data/db
+    ports:
+      - "27017:27017"
+    restart: always
+    networks:
+      - webapp-network
+  node:
+    container_name: nm_composee_node_container
+    image: nm_node
+    command: tail -F anything
+    depends_on:
+      - mongodb
+    ports:
+      - "8008:3000"
+    working_dir: /src
+    volumes:
+      - $PWD/src:/src
+    networks:
+      - webapp-network
+networks:
+  webapp-network:
+    driver: bridge

@@ -1,0 +1,4 @@
+FROM node:12.18
+WORKDIR /src
+RUN yarn
+EXPOSE 3000
